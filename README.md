@@ -10,16 +10,16 @@
 
 
 Version 1 Tracks the levels of:
-    - Light Armour
-    - Medium Armour
-    - Heavy Armour
-    - Fighters Guild
-    - Mages Guild
-    - Psijic Order
-    - Thieves Guild
-    - Undaunted
-    - Assault
-    - Support
+- Light Armour
+- Medium Armour
+- Heavy Armour
+- Fighters Guild
+- Mages Guild
+- Psijic Order
+- Thieves Guild
+- Undaunted
+- Assault
+- Support
 
 
 
