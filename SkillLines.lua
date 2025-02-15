@@ -89,6 +89,23 @@ local function GetCharacterSkillLevels(charName, skillName)
     return SkillLines.savedData[serverName][accountName][charName][skillName] or "-"
 end
 
+-- Save window position when moved
+local function SaveWindowPosition(control)
+    local left, top = control:GetLeft(), control:GetTop()
+    SkillLines.savedData.windowPosition = { left = left, top = top }
+    d("SkillLines Debug: Window position saved: " .. left .. ", " .. top)
+end
+
+-- Restore window position if saved
+local function RestoreWindowPosition(control)
+    if SkillLines.savedData.windowPosition then
+        local pos = SkillLines.savedData.windowPosition
+        control:ClearAnchors()
+        control:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, pos.left, pos.top)
+        d("SkillLines Debug: Window position restored: " .. pos.left .. ", " .. pos.top)
+    end
+end
+
 -- Create UI Table
 local function CreateSkillTable()
     local wm = WINDOW_MANAGER
@@ -97,10 +114,15 @@ local function CreateSkillTable()
     if not control then
         control = wm:CreateTopLevelWindow("SkillLinesUI")
         control:SetDimensions(1600, 880)
-        control:SetAnchor(CENTER, GuiRoot, CENTER, 0, 0)
         control:SetMovable(true)
         control:SetMouseEnabled(true)
         control:SetHidden(true) -- UI starts hidden
+
+        -- Save position when moved
+        control:SetHandler("OnMoveStop", function() SaveWindowPosition(control) end)
+
+        -- Restore saved position
+        RestoreWindowPosition(control)
 
         local bg = wm:CreateControl(nil, control, CT_BACKDROP)
         bg:SetAnchorFill(control)
@@ -154,6 +176,7 @@ local function CreateSkillTable()
     end
 end
 
+
 -- Show or Hide UI Based on Scene
 local function OnSkillsSceneStateChange(oldState, newState)
     local control = WINDOW_MANAGER:GetControlByName("SkillLinesUI")
@@ -186,6 +209,7 @@ local function OnAddOnLoaded(event, addonName)
         ["version"] = 1,
         ["EU Megaserver"] = {},
         ["NA Megaserver"] = {},
+        windowPosition = { left = 100, top = 100 }
     })
 
     EVENT_MANAGER:RegisterForEvent(SkillLines.name, EVENT_PLAYER_ACTIVATED, OnPlayerActivated)
