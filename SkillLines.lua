@@ -30,11 +30,16 @@ local function GetStoredCharacterData()
                 table.insert(characters, { name = charName, alliance = nil }) -- No alliance data stored
             end
         end
+        -- Sort characters alphabetically by name
+        table.sort(characters, function(a, b)
+            return a.name < b.name
+        end)
     else
         d("SkillLines Debug: No saved data found for server: " .. serverName .. ", account: " .. accountName)
     end
     return characters
 end
+
 
 -- Save character skill levels
 local function UpdateCharacterSkillLevels()
