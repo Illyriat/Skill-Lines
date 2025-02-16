@@ -121,11 +121,12 @@ local function CreateSkillTable()
         end
 
         -- Calculate column width dynamically
-        local columnWidth = 120  -- Set a default column width
+        local columnWidth = 90  -- Set a default column width
         local totalWidth = 20 + (numColumns * columnWidth)  -- Calculate required width
 
         -- Adjust UI window width based on required column space
-        local windowWidth = math.min(math.max(totalWidth, 600), screenWidth * 0.9)  -- Min 600px, Max 90% of screen
+        local padding = 40
+        local windowWidth = math.min(math.max(totalWidth + padding, 750), screenWidth * 0.95)
         local windowHeight = math.min(0.7 * screenHeight, 650)  -- Height remains dynamic but capped
 
         control = wm:CreateTopLevelWindow("SkillLinesUI")
@@ -160,7 +161,7 @@ local function CreateSkillTable()
         container:SetDimensions(windowWidth - 20, windowHeight - 50)
 
         -- Adjust header placement dynamically
-        local headerXOffset = 160
+        local headerXOffset = 130
         for _, category in ipairs(skillLines) do
             for _, skillName in ipairs(category.names) do
                 local skillHeader = wm:CreateControl(nil, container, CT_LABEL)
@@ -185,7 +186,7 @@ local function CreateSkillTable()
             charControl:SetHorizontalAlignment(TEXT_ALIGN_LEFT)
             charControl:SetWrapMode(TEXT_WRAP_MODE_ELLIPSIS)  
 
-            local xOffset = 160
+            local xOffset = 130
             for _, category in ipairs(skillLines) do
                 for _, skillName in ipairs(category.names) do
                     local skillControl = wm:CreateControl(nil, container, CT_LABEL)
