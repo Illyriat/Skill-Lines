@@ -112,11 +112,27 @@ local function CreateSkillTable()
     local control = wm:GetControlByName("SkillLinesUI")
 
     if not control then
+        local screenWidth, screenHeight = GuiRoot:GetWidth(), GuiRoot:GetHeight()
+
+        -- Determine number of columns based on skill categories
+        local numColumns = 1  -- Start with 1 for character name column
+        for _, category in ipairs(skillLines) do
+            numColumns = numColumns + #category.names
+        end
+
+        -- Calculate column width dynamically
+        local columnWidth = 120  -- Set a default column width
+        local totalWidth = 20 + (numColumns * columnWidth)  -- Calculate required width
+
+        -- Adjust UI window width based on required column space
+        local windowWidth = math.min(math.max(totalWidth, 600), screenWidth * 0.9)  -- Min 600px, Max 90% of screen
+        local windowHeight = math.min(0.7 * screenHeight, 650)  -- Height remains dynamic but capped
+
         control = wm:CreateTopLevelWindow("SkillLinesUI")
-        control:SetDimensions(1600, 880)
+        control:SetDimensions(windowWidth, windowHeight)
         control:SetMovable(true)
         control:SetMouseEnabled(true)
-        control:SetHidden(true) -- UI starts hidden
+        control:SetHidden(true)
 
         -- Save position when moved
         control:SetHandler("OnMoveStop", function() SaveWindowPosition(control) end)
@@ -128,53 +144,67 @@ local function CreateSkillTable()
         bg:SetAnchorFill(control)
         bg:SetCenterColor(0, 0, 0, 0.8)
 
+        -- Font Scaling - Keep text readable but compact
+        local baseFontSize = 16  
+        local scaleFactor = windowWidth / 1600  
+        local fontSize = math.max(math.min(baseFontSize * scaleFactor, 16), 14)  
+
+        -- Title
         local title = wm:CreateControl(nil, control, CT_LABEL)
         title:SetText("Skill Lines Tracker")
-        title:SetAnchor(TOP, control, TOP, 0, 10)
-        title:SetFont("ZoFontWinH2")
+        title:SetAnchor(TOP, control, TOP, 0, 5)
+        title:SetFont(string.format("$(BOLD_FONT)|%d|soft-shadow-thick", fontSize + 2))
 
         local container = wm:CreateControl(nil, control, CT_CONTROL)
-        container:SetAnchor(TOPLEFT, control, TOPLEFT, 10, 40)
-        container:SetDimensions(1580, 750)
+        container:SetAnchor(TOPLEFT, control, TOPLEFT, 10, 30)
+        container:SetDimensions(windowWidth - 20, windowHeight - 50)
 
-        local characters = GetStoredCharacterData()
-        local headerXOffset = 250
-
-        -- Create headers for each skill line
+        -- Adjust header placement dynamically
+        local headerXOffset = 160
         for _, category in ipairs(skillLines) do
             for _, skillName in ipairs(category.names) do
                 local skillHeader = wm:CreateControl(nil, container, CT_LABEL)
                 skillHeader:SetText(skillName)
-                skillHeader:SetAnchor(TOPLEFT, container, TOPLEFT, headerXOffset, 10)
-                skillHeader:SetFont("ZoFontWinH4")
-                headerXOffset = headerXOffset + 130
+                skillHeader:SetAnchor(TOPLEFT, container, TOPLEFT, headerXOffset, 5)
+                skillHeader:SetFont(string.format("$(MEDIUM_FONT)|%d|soft-shadow-thin", fontSize - 2))
+                skillHeader:SetDimensions(columnWidth, 25)  
+                skillHeader:SetHorizontalAlignment(TEXT_ALIGN_CENTER)  
+                skillHeader:SetWrapMode(TEXT_WRAP_MODE_ELLIPSIS)  
+                headerXOffset = headerXOffset + columnWidth
             end
         end
 
-        -- Populate the table with character data
-        local dataYOffset = 40
-        for _, charData in ipairs(characters) do
-            d("SkillLines Debug: Adding character to table: " .. charData.name)
+        -- Adjust row spacing
+        local dataYOffset = 30
+        for _, charData in ipairs(GetStoredCharacterData()) do
             local charControl = wm:CreateControl(nil, container, CT_LABEL)
             charControl:SetText(charData.name)
             charControl:SetAnchor(TOPLEFT, container, TOPLEFT, 10, dataYOffset)
-            charControl:SetFont("ZoFontWinH4")
+            charControl:SetFont(string.format("$(MEDIUM_FONT)|%d|soft-shadow-thin", fontSize))
+            charControl:SetDimensions(140, 25)  
+            charControl:SetHorizontalAlignment(TEXT_ALIGN_LEFT)
+            charControl:SetWrapMode(TEXT_WRAP_MODE_ELLIPSIS)  
 
-            local xOffset = 250
+            local xOffset = 160
             for _, category in ipairs(skillLines) do
                 for _, skillName in ipairs(category.names) do
                     local skillControl = wm:CreateControl(nil, container, CT_LABEL)
                     local rank = GetCharacterSkillLevels(charData.name, skillName)
                     skillControl:SetText(tostring(rank))
                     skillControl:SetAnchor(TOPLEFT, container, TOPLEFT, xOffset, dataYOffset)
-                    skillControl:SetFont("ZoFontWinH4")
-                    xOffset = xOffset + 130
+                    skillControl:SetFont(string.format("$(MEDIUM_FONT)|%d|soft-shadow-thin", fontSize))
+                    skillControl:SetDimensions(columnWidth, 25)  
+                    skillControl:SetHorizontalAlignment(TEXT_ALIGN_CENTER)
+                    skillControl:SetWrapMode(TEXT_WRAP_MODE_ELLIPSIS)  
+                    xOffset = xOffset + columnWidth
                 end
             end
-            dataYOffset = dataYOffset + 40
+            dataYOffset = dataYOffset + 28
         end
     end
 end
+
+
 
 
 -- Show or Hide UI Based on Scene
