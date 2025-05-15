@@ -1,7 +1,7 @@
 ## Title: Skill Lines
-## APIVersion: 101043 101044 101045
-## Version: 1.0.0
-## AddonVersion: 1.0.0
+## APIVersion: 101045 101046
+## Version: 2.0.0
+## AddonVersion: 2.0.0
 ## Author: |c4B8BFERanckor90|r
 ## Description: View a Table of your characters Skill Line levels in one window.
 ## SavedVariables: SkillLinesSavedVars

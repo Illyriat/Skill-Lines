@@ -6,22 +6,13 @@
         ** Launch the Game & Log into your first character
         ** Each character must be logged into to receive the data & load it into your saved variables file
         ** Once complete log into your first character again & open the Skills Menu (K by default on M&KB)
-        ** Your Character Skill Lines Table is now showing. 
+        ** Your Character Skill Lines Table is now showing.
 
 
-Version 1 Tracks the levels of:
-- Light Armour
-- Medium Armour
-- Heavy Armour
-- Fighters Guild
-- Mages Guild
-- Psijic Order
-- Thieves Guild
-- Undaunted
-- Assault
-- Support
+Version 2 now Tracks all Skill lines with the exception of the Class skill lines.
+Users can also now Track Character on the opposite server.
 
-![SkillLines IMAGE](./imgs/skilllinesimg1.JPG)
+![SkillLines IMAGE](./imgs/SkillLinesV2.JPG)
 
 
 

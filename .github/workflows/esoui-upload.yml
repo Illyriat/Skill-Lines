@@ -1,0 +1,26 @@
+name: Upload to ESOUI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Zip addon folder
+        run: |
+          cd SkillLines
+          zip -r ../SkillLines.zip *
+
+      - name: Upload to ESOUI
+        uses: m00nyONE/esoui-upload@v1
+        with:
+          esoui-username: ${{ secrets.ESOUI_USERNAME }}
+          esoui-api-token: ${{ secrets.ESOUI_ADDON_UPDATE }}
+          addon-id: 4041
+          zip-file: SkillLines.zip
+          changelog: CHANGELOG.txt

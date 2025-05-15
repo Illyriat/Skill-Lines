@@ -1,0 +1,6 @@
+Version 2.0.0
+- Added All Skill Lines (Not Classes).
+- Added Tabs for categories based on the Skill Scene category for ease of use.
+- Added an option to switch Server View no matter the currently logged on Server.
+- Now updates live when the Skill window is opened.
+- Unused lines or where the data is not available will show a - instead of the number value
