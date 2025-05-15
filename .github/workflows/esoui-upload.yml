@@ -20,8 +20,8 @@ jobs:
       - name: Upload to ESOUI
         uses: m00nyONE/esoui-upload@v1
         with:
-          esoui-username: ${{ secrets.ESOUI_USERNAME }}
-          esoui-api-token: ${{ secrets.ESOUI_ADDON_UPDATE }}
-          addon-id: 4041
-          zip-file: SkillLines.zip
-          changelog: CHANGELOG.txt
+          api_key: ${{ secrets.ESOUI_ADDON_UPDATE }}
+          addon_id: 4041
+          version: v2.0.0
+          zip_file: SkillLines.zip
+          changelog_file: CHANGELOG.txt
