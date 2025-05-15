@@ -14,8 +14,8 @@ jobs:
 
       - name: Zip addon folder
         run: |
-          cd SkillLines
-          zip -r ../SkillLines.zip *
+          zip -r SkillLines.zip SkillLines
+
 
       - name: Upload to ESOUI
         uses: m00nyONE/esoui-upload@v1
