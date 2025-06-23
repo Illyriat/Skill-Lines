@@ -1,4 +1,4 @@
--- Ingame script to enable console Mode on PC
+ -- Ingame script to enable console Mode on PC
 -- /script SetCVar("ForceConsoleFlow.2", "1")
 
 
