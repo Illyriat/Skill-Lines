@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'LICENSE'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - '.github/**'
+      - '*.md'
 
 jobs:
   upload:
@@ -25,3 +31,14 @@ jobs:
           version: v2.0.0
           zip_file: SkillLines.zip
           changelog_file: CHANGELOG.txt
+
+
+      - name: Update version badge in README
+        run: |
+          sed -i -E "s/version-v[0-9]+\.[0-9]+\.[0-9]+/version-${VERSION}/" README.md
+
+      - name: Commit README change
+        uses: EndBug/add-and-commit@v9
+        with:
+          add:      README.md
+          message:  "docs: bump README to ${VERSION} [skip ci]"

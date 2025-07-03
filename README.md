@@ -1,4 +1,9 @@
 # Skill Lines
+![Version](https://img.shields.io/badge/version-v2.0.0-blue)  ![License: All Rights Reserved](https://img.shields.io/badge/license-All--Rights--Reserved-red)  ![Usage: No Redistribution](https://img.shields.io/badge/Usage-No%20Redistribution-red)
+
+
+> ⚠️ This project is not open-source. Redistribution, modification, or reuse is prohibited without explicit permission.
+
 
 ### View all your characters skill lines levels in one place.
     * For this Addon to work follow these steps:
